@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Livestream Highlights</string>
+    <string name="numviews">%1$s views</string>
+</resources>
