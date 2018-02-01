@@ -1,5 +1,6 @@
 package com.paricio.livestreamhighlights.ClipList;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.paricio.livestreamhighlights.Clip.ClipActivity;
 import com.paricio.livestreamhighlights.ClipList.ClipListRecyclerView.ClipItemListener;
 import com.paricio.livestreamhighlights.ClipList.ClipListRecyclerView.ClipListAdapter;
 import com.paricio.livestreamhighlights.Model.Broadcaster;
@@ -35,7 +37,7 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
         //Empty constructor
     }
 
-    public static ClipListFragment newIntance() {
+    public static ClipListFragment newInstance() {
         return new ClipListFragment();
     }
 
@@ -116,6 +118,8 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
 
     @Override
     public void showClip(Clip clip) {
-        //TODO intent to open the clip in another activity
+        Intent intent = new Intent(getActivity(), ClipActivity.class);
+        intent.putExtra("url",clip.getEmbed_url());
+        startActivity(intent);
     }
 }

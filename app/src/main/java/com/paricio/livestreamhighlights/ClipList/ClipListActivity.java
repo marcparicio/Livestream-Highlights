@@ -19,11 +19,9 @@ public class ClipListActivity extends AppCompatActivity {
         ClipListFragment clipListFragment =
                 (ClipListFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (clipListFragment == null) {
-            clipListFragment = ClipListFragment.newIntance();
+            clipListFragment = ClipListFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contentFrame,clipListFragment).commit();
-
-
 
         }
 
