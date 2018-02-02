@@ -119,7 +119,9 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
     @Override
     public void showClip(Clip clip) {
         Intent intent = new Intent(getActivity(), ClipActivity.class);
-        intent.putExtra("url",clip.getEmbed_url());
+        intent.putExtra("title",clip.getTitle());
+        intent.putExtra("broadcaster",clip.getBroadcaster().getDisplay_name());
+        intent.putExtra("slug",clip.getSlug());
         startActivity(intent);
     }
 }

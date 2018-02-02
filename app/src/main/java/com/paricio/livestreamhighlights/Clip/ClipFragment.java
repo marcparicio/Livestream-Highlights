@@ -2,6 +2,7 @@ package com.paricio.livestreamhighlights.Clip;
 
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.paricio.livestreamhighlights.Model.Clip;
 import com.paricio.livestreamhighlights.R;
@@ -44,18 +47,26 @@ public class ClipFragment extends Fragment implements ClipContract.View {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_clip, container, false);
         View view = binding.getRoot();
-        int length = view.getWidth();
-        /*slug = getActivity().getIntent().getExtras().getString("slug");
-        String embed_url = "http://clips.twitch.tv/embed?clip=" + slug + "&autoplay=false&muted=false&preload=metadata";
-        html_url = "<iframe src='"+ embed_url +"' width='"+ length + "' height='"+ length +"' frameborder='0' scrolling='no' allowfullscreen='true'><\\/iframe>";
-*/
-        //html_url = "<iframe src='https://clips.twitch.tv/embed?clip=VictoriousDependableLarkPanicVis&tt_medium=clips_api&tt_content=embed' width='"+ length + "' height='" + length +"' frameborder='0' scrolling='no' allowfullscreen='true'><\\/iframe>";
-        html_url = "<iframe src='https://clips.twitch.tv/embed?clip=VictoriousDependableLarkPanicVis&tt_medium=clips_api&tt_content=embed' width='100%' height='100%' scrolling='no'><\\/iframe>";
+        binding.fragmentClipTitle.setText(getActivity().getIntent().getExtras().getString("title"));
+        binding.fragmentClipBroadcaster.setText(getActivity().getIntent().getExtras().getString("broadcaster"));
+        slug = getActivity().getIntent().getExtras().getString("slug");
+        html_url = "<iframe src='https://clips.twitch.tv/embed?clip=" + slug +
+                "&autoplay=false&muted=false&preload=metadata' width='100%' height='100%' "+
+                " frameborder='0' style=\"background: #FFFFFF;\" scrolling='false' allowfullscreen='true'><\\iframe>";
         WebView webView = binding.fragmentClipWebview;
         webView.loadData(html_url,"text/html",null);
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                binding.pbLoading.setVisibility(View.VISIBLE);
+
+                if(progress == 100)
+                    binding.pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+        webView.setBackgroundColor(getResources().getColor(R.color.black));
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         webSettings.setLoadWithOverviewMode(true);
         return view;
     }

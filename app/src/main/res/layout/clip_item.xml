@@ -8,14 +8,14 @@
         android:id="@+id/clip_item_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/cardview_margin"
-        android:layout_marginBottom="@dimen/cardview_margin"
+        android:layout_marginTop="0.1dp"
+        android:layout_marginBottom="0.1dp"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_depth">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/meeting_item_padding_horizontal">
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/clip_item_thumbnail"
