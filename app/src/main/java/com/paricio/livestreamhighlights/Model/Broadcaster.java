@@ -1,7 +1,9 @@
 package com.paricio.livestreamhighlights.Model;
 
 
-public class Broadcaster {
+import java.io.Serializable;
+
+public class Broadcaster implements Serializable {
 
     private String id;
     private String name;

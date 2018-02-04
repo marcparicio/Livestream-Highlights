@@ -1,6 +1,8 @@
 package com.paricio.livestreamhighlights.Model;
 
-public class Thumbnails {
+import java.io.Serializable;
+
+public class Thumbnails implements Serializable {
 
     private String medium;
     private String small;

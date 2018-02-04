@@ -1,20 +1,26 @@
 package com.paricio.livestreamhighlights.ClipList;
 
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
 import com.paricio.livestreamhighlights.R;
+import com.paricio.livestreamhighlights.databinding.ActivityClipListBinding;
 
 public class ClipListActivity extends AppCompatActivity {
 
     private ClipListPresenter clipListPresenter;
+    private ActivityClipListBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clip_list);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_clip_list);
 
-        //TODO setup toolbar
+        setSupportActionBar(binding.activityToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         ClipListFragment clipListFragment =
                 (ClipListFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
@@ -28,5 +34,4 @@ public class ClipListActivity extends AppCompatActivity {
         clipListPresenter = new ClipListPresenter(clipListFragment);
     }
 
-    //TODO setup menu buttons
 }

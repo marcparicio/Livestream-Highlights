@@ -1,29 +1,39 @@
 package com.paricio.livestreamhighlights.ClipList;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v4.app.Fragment;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.paricio.livestreamhighlights.Clip.ClipActivity;
 import com.paricio.livestreamhighlights.ClipList.ClipListRecyclerView.ClipItemListener;
 import com.paricio.livestreamhighlights.ClipList.ClipListRecyclerView.ClipListAdapter;
-import com.paricio.livestreamhighlights.Model.Broadcaster;
 import com.paricio.livestreamhighlights.Model.Clip;
 import com.paricio.livestreamhighlights.R;
 import com.paricio.livestreamhighlights.databinding.FragmentClipListBinding;
+import com.paricio.livestreamhighlights.utils.UrlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.paricio.livestreamhighlights.utils.ClipUtils.MEDIUM_QUALITY;
 
 
 public class ClipListFragment extends Fragment implements ClipListContract.View {
@@ -32,6 +42,8 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
     private FragmentClipListBinding binding;
     private ClipListAdapter adapter;
     private LinearLayoutManager layoutManager;
+    private String quality;
+    private Spinner quality_spinner;
 
     public ClipListFragment() {
         //Empty constructor
@@ -49,7 +61,6 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.start();
     }
 
     @Override
@@ -69,6 +80,9 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_clip_list, container, false);
         View view = binding.getRoot();
+
+
+        quality = MEDIUM_QUALITY;
         layoutManager = new LinearLayoutManager(getActivity());
         binding.clipRecyclerview.setLayoutManager(layoutManager);
         adapter = new ClipListAdapter(new ArrayList<Clip>(), new ClipItemListener() {
@@ -96,6 +110,9 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
         });
 
         binding.clipRecyclerview.setAdapter(adapter);
+        setHasOptionsMenu(true);
+        getActivity().setTitle(getResources().getString(R.string.highlights));
+        presenter.start();
         return view;
     }
 
@@ -117,11 +134,49 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
     }
 
     @Override
+    public void checkWifi() {
+        ConnectivityManager connectionManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiCheck = connectionManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (!wifiCheck.isConnected()) {
+            Toast.makeText(getContext(),R.string.connect_wifi_suggestion,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     public void showClip(Clip clip) {
+        quality = quality_spinner.getSelectedItem().toString();
         Intent intent = new Intent(getActivity(), ClipActivity.class);
-        intent.putExtra("title",clip.getTitle());
+        intent.putExtra("url", UrlUtils.getClipUrl(clip,quality));
         intent.putExtra("broadcaster",clip.getBroadcaster().getDisplay_name());
-        intent.putExtra("slug",clip.getSlug());
         startActivity(intent);
     }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.spinner);
+        quality_spinner = (Spinner) item.getActionView();
+
+        ArrayAdapter<CharSequence> qualityAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.quality_spinner_items, android.R.layout.simple_spinner_item);
+        qualityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        quality_spinner.setAdapter(qualityAdapter);
+        quality_spinner.setSelection(1);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().finish();
+                break;
+            case R.id.about:
+                Toast.makeText(getContext(),R.string.version,Toast.LENGTH_LONG).show();
+        }
+        return true;
+    }
+
 }

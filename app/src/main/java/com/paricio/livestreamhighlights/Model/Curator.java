@@ -1,6 +1,8 @@
 package com.paricio.livestreamhighlights.Model;
 
-public class Curator {
+import java.io.Serializable;
+
+public class Curator implements Serializable {
 
     private String id;
     private String name;

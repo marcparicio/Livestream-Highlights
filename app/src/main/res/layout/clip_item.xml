@@ -19,10 +19,21 @@
 
             <ImageView
                 android:id="@+id/clip_item_thumbnail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/guidelineRight"
+                app:layout_constraintStart_toStartOf="parent"
                 android:paddingStart="0dp"
                 android:paddingEnd="@dimen/meeting_item_padding_horizontal"/>
+
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guidelineRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
+
 
             <TextView
                 android:id="@+id/clip_item_title"

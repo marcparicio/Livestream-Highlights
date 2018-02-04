@@ -19,6 +19,8 @@ public interface ClipListContract {
         void showClip(Clip clip);
 
         void addClipsToList(List<Clip> clipsToBeProcessed);
+
+        void checkWifi();
     }
 
     interface Presenter extends BasePresenter {

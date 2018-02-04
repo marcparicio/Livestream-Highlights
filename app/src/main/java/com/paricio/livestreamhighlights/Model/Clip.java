@@ -1,8 +1,9 @@
 package com.paricio.livestreamhighlights.Model;
 
 
+import java.io.Serializable;
 
-public class Clip {
+public class Clip implements Serializable{
 
     private String slug;
     private String tracking_id;

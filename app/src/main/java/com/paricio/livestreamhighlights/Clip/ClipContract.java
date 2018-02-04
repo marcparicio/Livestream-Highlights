@@ -10,10 +10,14 @@ public interface ClipContract  {
     interface View extends BaseView<Presenter> {
         void setLoading(boolean active);
 
-        void loadClip(Clip clip);
+
+        void initializePlayer();
+
+        void releasePlayer();
     }
 
     interface Presenter extends BasePresenter {
-        void loadClip(Clip clip);
+
+        void stop();
     }
 }

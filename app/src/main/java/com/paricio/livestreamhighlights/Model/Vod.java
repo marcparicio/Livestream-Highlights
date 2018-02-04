@@ -1,7 +1,9 @@
 package com.paricio.livestreamhighlights.Model;
 
 
-public class Vod {
+import java.io.Serializable;
+
+public class Vod implements Serializable {
 
     private String id;
     private String url;

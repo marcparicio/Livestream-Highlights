@@ -9,6 +9,7 @@ public class ClipPresenter implements ClipContract.Presenter {
 
     private ClipContract.View clipView;
 
+
     public ClipPresenter(@NonNull ClipContract.View view) {
         this.clipView = view;
         clipView.setPresenter(this);
@@ -16,11 +17,11 @@ public class ClipPresenter implements ClipContract.Presenter {
 
     @Override
     public void start() {
-
+        clipView.initializePlayer();
     }
 
     @Override
-    public void loadClip(Clip clip) {
-
+    public void stop() {
+        clipView.releasePlayer();
     }
 }

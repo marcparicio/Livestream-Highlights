@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Livestream Highlights</string>
     <string name="numviews">%1$s views</string>
+    <string name="menu_main">Select Quality</string>
+    <string name="clip_quality_not_available">Clip not available in this quality</string>
+    <string name="about">About</string>
+    <string name="version">App version: 1.0</string>
+    <string name="highlights">Highlights</string>
+    <string name="connect_wifi_suggestion">Consider turning Wifi On to save mobile data</string>
+
+    <string-array name="quality_spinner_items">
+        <item>360p</item>
+        <item>480p</item>
+        <item>720p</item>
+    </string-array>
 </resources>

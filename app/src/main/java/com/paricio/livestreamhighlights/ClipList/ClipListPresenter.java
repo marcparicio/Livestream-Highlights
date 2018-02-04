@@ -2,8 +2,6 @@ package com.paricio.livestreamhighlights.ClipList;
 
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.View;
 
 import com.paricio.livestreamhighlights.Model.Clip;
 import com.paricio.livestreamhighlights.Network.ClipsService;
@@ -39,6 +37,7 @@ public class ClipListPresenter implements ClipListContract.Presenter {
     @Override
     public void start() {
         loadClips(false);
+        clipListView.checkWifi();
     }
 
     @Override
