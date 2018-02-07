@@ -107,7 +107,6 @@ public class ClipFragment extends Fragment implements ClipContract.View {
         getActivity().setTitle(broadcaster);
         String url = getActivity().getIntent().getStringExtra("url");
         uri = Uri.parse(url);
-        Log.i("ClipFragment",url);
         setHasOptionsMenu(true);
         return view;
     }
