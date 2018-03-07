@@ -84,7 +84,7 @@ public class ClipListPresenter implements ClipListContract.Presenter {
     }
 
     private void processClipList(List<Clip> clipsToBeProcessed) {
-        if (clipsToBeProcessed != null && !clipsToBeProcessed.isEmpty()) {
+        if (clipsToBeProcessed != null && !clipsToBeProcessed.isEmpty() && clipListView.isActive()) {
             if (PAGE == 0 || forceRefresh) {
                 clipListView.refreshClipList(clipsToBeProcessed);
                 pageSize = clipsToBeProcessed.size();

@@ -151,7 +151,10 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
         startActivity(intent);
     }
 
-
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
