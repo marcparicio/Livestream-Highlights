@@ -143,7 +143,7 @@ public class ClipListFragment extends Fragment implements ClipListContract.View 
     }
 
     @Override
-    public void showClip(Clip clip) {
+    public void showClip(@NonNull Clip clip) {
         quality = quality_spinner.getSelectedItem().toString();
         Intent intent = new Intent(getActivity(), ClipActivity.class);
         intent.putExtra("url", UrlUtils.getClipUrl(clip,quality));

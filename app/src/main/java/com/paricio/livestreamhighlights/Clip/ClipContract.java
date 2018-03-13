@@ -8,12 +8,12 @@ import com.paricio.livestreamhighlights.Model.Clip;
 public interface ClipContract  {
 
     interface View extends BaseView<Presenter> {
-        void setLoading(boolean active);
-
 
         void initializePlayer();
 
         void releasePlayer();
+
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter {

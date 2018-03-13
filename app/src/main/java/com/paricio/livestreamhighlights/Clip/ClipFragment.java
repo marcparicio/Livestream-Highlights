@@ -182,17 +182,17 @@ public class ClipFragment extends Fragment implements ClipContract.View {
     }
 
     @Override
-    public void setLoading(boolean active) {
-        //TODO set loading
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 getActivity().finish();
         }
         return true;
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
     }
 
     private void initExoPlayer() {

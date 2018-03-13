@@ -9,6 +9,7 @@ import com.paricio.livestreamhighlights.Network.RetrofitHelper;
 
 import java.util.List;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -16,21 +17,27 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ClipListPresenter implements ClipListContract.Presenter {
 
+
+    private Scheduler processScheduler;
+    private Scheduler androidScheduler;
+    private ClipsService clipsService;
+    private Disposable clipsDisposable;
     private int PAGE;
     private int pageSize;
     private final ClipListContract.View clipListView;
     private boolean firstLoad = true;
-    private ClipsService clipsService;
-    private Disposable clipsDisposable;
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private boolean forceRefresh = false;
 
-    public ClipListPresenter(@NonNull ClipListContract.View clipListView) {
+    public ClipListPresenter(@NonNull ClipListContract.View clipListView, @NonNull ClipsService clipsService,
+                                @NonNull Scheduler androidScheduler, @NonNull Scheduler processScheduler) {
         this.clipListView = clipListView;
 
         PAGE = 0;
-        clipsService = new RetrofitHelper().getCityService();
+        this.clipsService = clipsService;
+        this.processScheduler = processScheduler;
+        this.androidScheduler = androidScheduler;
         clipListView.setPresenter(this);
     }
 
@@ -47,7 +54,7 @@ public class ClipListPresenter implements ClipListContract.Presenter {
         firstLoad = false;
     }
 
-    public void loadClips(boolean forceReaload, boolean showLoadingUI) {
+    private void loadClips(boolean forceReaload, boolean showLoadingUI) {
         if (showLoadingUI) {
             clipListView.setLoadingIndicator(true);
         }
@@ -78,8 +85,8 @@ public class ClipListPresenter implements ClipListContract.Presenter {
 
     private void requestClips() {
         clipsDisposable = clipsService.getAllMeetings(PAGE).
-                observeOn(AndroidSchedulers.mainThread()).
-                subscribeOn(Schedulers.newThread()).
+                observeOn(androidScheduler).
+                subscribeOn(processScheduler).
                 subscribe(this::processClipList);
     }
 

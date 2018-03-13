@@ -26,6 +26,8 @@ public class Clip implements Serializable{
 
     }
 
+
+
     public Clip(String slug, String tracking_id, String url, String embed_url, String embed_html, Broadcaster broadcaster,
                 Curator curator, Vod vod, String broadcast_id, String game, String language, String title, long views, float duration, String created_at,
                 Thumbnails thumbnails) {
