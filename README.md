@@ -7,5 +7,8 @@ Some frameworks/patterns I used:
 - Basics of RxJava
 - Retrofit
 - JUnit
+- Mockito
 - Picasso
-- Gson 
+- Gson
+- ExoPlayer
+- Firebase (Analytics)
